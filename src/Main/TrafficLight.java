@@ -6,16 +6,22 @@ import pds.trafficlight.Reporter;
 
 public class TrafficLight extends Thread {
 
-	CardinalDirection cd;
-	private static volatile CardinalDirection dir;//x
-	Colour color;
+	private CardinalDirection cd; // Aktueller Standort der Ampel
+	private static volatile CardinalDirection dir;// Shared Memory, welche Ampel Richtung schalten darf
+	
+	private Colour color; // Farbe der aktuellen Ampel
+	private static volatile Colour mainColor; // Farbe der "Hauptampel" (die zuerst in die mutual exclusion rein gegangen ist)
+	private static volatile Colour oppColor; // Farbe der gegenüberliegenden Ampel z.B. North --> South
+	private static volatile Colour nextColor; // Die nächste Farbe, auf die die Ampeln geschaltet werden sollen
 
-	private static volatile boolean mainAxis;//andere Bezeichnung z.B. mainaxis
-
-	static volatile boolean stopped = false;
+	private static volatile boolean stopped = false; // Solange wie auf false gesetzt ist, laufen die Ampeln
+	
+	private static final Object lock = new Object(); // Mutual Exclusion lock Object
 
 	public TrafficLight(CardinalDirection cd, CardinalDirection dir) {
-		this.color = Colour.RED;
+		color = Colour.RED;
+		oppColor = Colour.RED;
+		nextColor = Colour.GREEN;
 		this.cd = cd;
 		TrafficLight.dir = dir;
 	}
@@ -32,26 +38,41 @@ public class TrafficLight extends Thread {
 		Reporter.show(cd, color);
 
 		while (!stopped) {
-			synchronized (this) { // mutual exclusion, xxxxxxxx
+			synchronized (lock) { // mutual exclusion, xxxxxxxx	
 				if (cd == dir) {
-					color = Colour.next(color);
-					Reporter.show(cd, color);
-
-					if (color == Colour.RED) {
-						// System.out.println(cd + ": " + isRed);
-						if (!mainAxis) {
-							dir = CardinalDirection.opposite(cd);
-							mainAxis = true;
-						} else {
-							dir = CardinalDirection.next(cd);//xxxxxxxxxx
-							mainAxis = false;
+					
+						if(color != nextColor) { // Wenn aktuelle Farbe ungleich nächste (erwartete) Farbe
+							color = Colour.next(color); // Schalte aktuelle Ampel auf die nächste Farbe
+							Reporter.show(cd, color);
+							mainColor = color; // Die Farbe der Hauptampel der aktuellen Axis
 						}
-					} else {
-						dir = CardinalDirection.opposite(cd);
+						
+						if(oppColor == color) { // Wenn gegenüberliegende Farbe gleich ist, wie die aktuelle Ampel
+							nextColor = Colour.next(nextColor); // Nächste Ampel Farbe bestimmen
+							
+							if(nextColor == Colour.GREEN) { // Wenn die nächste erwartete Farbe GREEN ist, wird die Axis geschaltet
+								dir = CardinalDirection.next(cd);
+							}
+						}
+					
+				}else if(cd == CardinalDirection.opposite(dir)) {
+					
+					if(color != nextColor) {
+						color = Colour.next(color);
+						Reporter.show(cd, color);
+						oppColor = color;
+					}
+					
+					if(mainColor == color) {
+						nextColor = Colour.next(nextColor);
+						
+						if(nextColor == Colour.GREEN) {
+							dir = CardinalDirection.next(cd);
+						}
 					}
 				}
 			}
-		}
+		}		
 	}
 
 	// Aufgabe c
