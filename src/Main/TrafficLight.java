@@ -1,82 +1,88 @@
-package Main;
+package main;
 
 import pds.trafficlight.CardinalDirection;
 import pds.trafficlight.Colour;
 import pds.trafficlight.Reporter;
 
+/**
+ * The traffic light circuit provides safe signalling.
+ * The traffic lights communicate via the shared memory,
+ * each traffic light is represented by its own thread.
+ * <br><code><b>[PVS]</b></code>
+ *
+ * @author Gruppe C1
+ * @version 1.00
+ */
 public class TrafficLight extends Thread {
+  private CardinalDirection cd;
+  private static volatile CardinalDirection dir;
 
-	private CardinalDirection cd; // Aktueller Standort der Ampel
-	private static volatile CardinalDirection dir;// Shared Memory, welche Ampel Richtung schalten darf
-	
-	private Colour color; // Farbe der aktuellen Ampel
-	private static volatile Colour mainColor; // Farbe der "Hauptampel" (die zuerst in die mutual exclusion rein gegangen ist)
-	private static volatile Colour oppColor; // Farbe der gegenüberliegenden Ampel z.B. North --> South
-	private static volatile Colour nextColor; // Die nächste Farbe, auf die die Ampeln geschaltet werden sollen
+  private Colour color; // Colour of the traffic light
+  private static volatile Colour mainColor; // Colour of the "main traffic light"
+  private static volatile Colour oppositeColor; // Colour of the opposite traffic light
+  private static volatile Colour nextColor; // Next (expected) traffic light colour
 
-	private static volatile boolean stopped = false; // Solange wie auf false gesetzt ist, laufen die Ampeln
-	
-	private static final Object lock = new Object(); // Mutual Exclusion lock Object
+  private static volatile boolean stopped = false;
 
-	public TrafficLight(CardinalDirection cd, CardinalDirection dir) {
-		color = Colour.RED;
-		oppColor = Colour.RED;
-		nextColor = Colour.GREEN;
-		this.cd = cd;
-		TrafficLight.dir = dir;
-	}
+  private static final Object lock = new Object();
 
-	@Override
-	public void run() {
-		// Aufgabe a
+  /**
+   * Constructor of the traffic light.
+   *
+   * @param cd  this is an cardinal direction of the location of this traffic light
+   * @param dir this direction of the sky indicates which direction of the
+    *            traffic light is allowed to start and the opposite traffic
+    *            light is also allowed to start.
+   */
+  public TrafficLight(CardinalDirection cd, CardinalDirection dir) {
+    color = Colour.RED;
+    oppositeColor = Colour.RED;
+    nextColor = Colour.GREEN;
+    this.cd = cd;
+    TrafficLight.dir = dir;
+  }
 
-		/*
-		 * while (true) { Reporter.show(cd, color); color = Colour.next(color); }
-		 */
+  /**
+   * This is the loop that switches the traffic lights.
+   */
+  @Override
+  public void run() {
 
-		// Aufgabe b
-		Reporter.show(cd, color);
+    Reporter.show(cd, color);
 
-		while (!stopped) {
-			synchronized (lock) { // mutual exclusion, xxxxxxxx	
-				if (cd == dir) {
-					
-						if(color != nextColor) { // Wenn aktuelle Farbe ungleich nächste (erwartete) Farbe
-							color = Colour.next(color); // Schalte aktuelle Ampel auf die nächste Farbe
-							Reporter.show(cd, color);
-							mainColor = color; // Die Farbe der Hauptampel der aktuellen Axis
-						}
-						
-						if(oppColor == color) { // Wenn gegenüberliegende Farbe gleich ist, wie die aktuelle Ampel
-							nextColor = Colour.next(nextColor); // Nächste Ampel Farbe bestimmen
-							
-							if(nextColor == Colour.GREEN) { // Wenn die nächste erwartete Farbe GREEN ist, wird die Axis geschaltet
-								dir = CardinalDirection.next(cd);
-							}
-						}
-					
-				}else if(cd == CardinalDirection.opposite(dir)) {
-					
-					if(color != nextColor) {
-						color = Colour.next(color);
-						Reporter.show(cd, color);
-						oppColor = color;
-					}
-					
-					if(mainColor == color) {
-						nextColor = Colour.next(nextColor);
-						
-						if(nextColor == Colour.GREEN) {
-							dir = CardinalDirection.next(cd);
-						}
-					}
-				}
-			}
-		}		
-	}
+    while (!stopped) {
+      synchronized (lock) { // mutual exclusion (critical area)
+        if (cd == dir || cd == CardinalDirection.opposite(dir)) {
 
-	// Aufgabe c
-	public void halt() {//xxxxxxxxxx
-		stopped = true;
-	}
+          if (color != nextColor) { // If current colour is not equal to next (expected) colour
+            color = Colour.next(color); // Switch current traffic light to the next colour
+            Reporter.show(cd, color);
+            if (cd == dir) {
+              mainColor = color; // The colour of the current traffic light
+            } else {
+              oppositeColor = color; // The colour of the traffic light opposite
+            }
+          }
+
+          if (oppositeColor == mainColor) { // opposite color is the same as the main color
+            nextColor = Colour.next(nextColor); // Next (expected) traffic light colour
+
+            if (nextColor == Colour.GREEN) { // If expected colour is green, the Axis will switch
+              dir = CardinalDirection.next(cd);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+  * The traffic light is called to stop.
+  * Here, only one of the 4 traffic lights needs to receive the information,
+   * as the information is stored in a shared variable.
+  * This will turn off all the traffic lights.
+  */
+  public void halt() {
+    stopped = true;
+  }
 }

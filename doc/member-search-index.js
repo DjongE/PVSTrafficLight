@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"Main","c":"TrafficLight","l":"halt()"},{"p":"Main","c":"TrafficLight","l":"run()"},{"p":"Main","c":"TrafficLight","l":"TrafficLight(CardinalDirection, CardinalDirection)","u":"%3Cinit%3E(pds.trafficlight.CardinalDirection,pds.trafficlight.CardinalDirection)"}];updateSearchResults();
