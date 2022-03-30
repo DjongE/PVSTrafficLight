@@ -45,6 +45,7 @@ public class TrafficLight extends Thread {
     this.cd = cd;
     TrafficLight.dir = dir;
     
+    
   }
 
   /**
