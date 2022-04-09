@@ -20,7 +20,11 @@ map
     value: Coin  -> Int;    % the value of a coin as an integer
 
 eqn
-    ... 
+	value(_5c) = 5;
+	value(_10c) = 10;
+	value(_20c) = 20;
+	value(_50c) = 50;
+	value(Euro) = 100;
 
 % -----------------------------------------------------------------------------------------------------------------------
 %
@@ -33,7 +37,10 @@ map
     price: Product  -> Int; % the price of a product as an integer
 
 eqn
-    ...
+    price(tea) = 10;
+	price(coffee) = 25;
+	price(cake) = 60;
+	price(apple) = 80;
 
 % -----------------------------------------------------------------------------------------------------------------------
 %
@@ -50,14 +57,22 @@ act
 % Definition of the processes
 %
 proc
-    VendingMachine = VM(0); 
+    VendingMachine = VM(0);                                        %Credit fingt mit 0
 
     VM(credit : Int) =
-        ...
+        sum c:Coin.(credit<200)->accept(c).VM(credit+value(c))     %Credit kleier (200)-> akzeptiert neue Coints
+        +sum p:Product.(credit>=price(p)) ->                       %Credit gleich oder größer als Produktpreis
+        offer(p).serve(p).VM(credit-price(p))                      %Produktpreis wird von Credit abgezogen
+        + (credit>0) -> returnChange(credit).ReturnChange(credit) %Return refund credit
     ;
 
     ReturnChange(credit : Int) =
-        ...
+        (credit>=100) -> return(100).ReturnChange(100) <>
+        (credit>=50) -> return(50).ReturnChange(50) <>
+        (credit>=20) -> return(20).ReturnChange(20) <>
+        (credit>=10) -> return(10).ReturnChange(10) <>
+        (credit>=5) -> return(5).ReturnChange(5) <> 
+        VM(credit)
     ;
 
 % -----------------------------------------------------------------------------------------------------------------------

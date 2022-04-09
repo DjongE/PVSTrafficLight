@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7fd56473-1310-490a-905e-ef092a0b5c9d" name="Changes" comment="fertig v1.3">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Protokoll.md" beforeDir="false" afterPath="$PROJECT_DIR$/Protokoll.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/TrafficLight.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/TrafficLight.class" afterDir="false" />
+    <list default="true" id="7fd56473-1310-490a-905e-ef092a0b5c9d" name="Changes" comment="add Aufgabe02 and fix last version Aufgabe01">
+      <change beforePath="$PROJECT_DIR$/Aufgabe02/1. VendingMachine/01_VM.mcrl2" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe02/1. VendingMachine/01_VM.mcrl2" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +100,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649084548221</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="add Aufgabe02 and fix last version Aufgabe01">
+      <created>1649490122761</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1649490122761</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -122,6 +127,7 @@
     <MESSAGE value="firtig v1.1" />
     <MESSAGE value="firtig v1.2" />
     <MESSAGE value="fertig v1.3" />
-    <option name="LAST_COMMIT_MESSAGE" value="fertig v1.3" />
+    <MESSAGE value="add Aufgabe02 and fix last version Aufgabe01" />
+    <option name="LAST_COMMIT_MESSAGE" value="add Aufgabe02 and fix last version Aufgabe01" />
   </component>
 </project>
