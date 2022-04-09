@@ -15,21 +15,21 @@
 ## Glossar
 
 #### Kritischer Abschnitt
-Kritische Abschnitte sind Bereiche, auf die mindestens zwei konkurrente Threads oder Prozesse zugreifen möchten, um gemeinsame Daten lesend und/oder schreibend zu verarbeiten.
+Kritische Abschnitte sind Bereiche, auf die mindestens zwei konkurrente Threads oder Prozesse zugreifen mÃ¶chten, um gemeinsame Daten lesend und/oder schreibend zu verarbeiten.
 
-#### Mutual exclusion
-Die Mutual exclusion ist auch als wechselseitiger Ausschluss bekannt. Sie dient dazu, das gleichzeitige Zugreifen von mehreren Prozessen auf die selben geteilten Variablen zu unterbinden.
+#### Mutual Exclusion/Wechselseitiger Ausschluss
+Die Mutual Exclusion ist auch als wechselseitiger Ausschluss bekannt. Sie hat die Aufgabe, dass gleichzeitige Zugreifen von mehreren Prozessen auf die selben geteilten Variablen zu unterbinden.
 
-#### Shared memory/geteilte Variable
-Shared memory wird genutzt, damit mehrere Objekte ein und denselben Speicher bzw. Variable nutzen können und somit ohne direkte Übergabe Daten überreichen oder gemeinsam nutzen und verändern können. Die Nutzung von shared memory/geteilten Variablen ist Teil eines Kritischen Abschnitts.
+#### Shared Memory/geteilte Variable
+Shared Memory wird genutzt, damit mehrere Objekte ein und denselben Speicher bzw. Variable nutzen kÃ¶nnen und somit ohne direkte Ãœbergabe Daten Ã¼berreichen oder gemeinsam nutzen und verÃ¤ndern kÃ¶nnen. Die Nutzung von Shared Memory/geteilten Variablen ist Teil eines kritischen Abschnitts.
 
-## Aufgabe 1: Nebenläufige Programme in Java
+## Aufgabe 1: NebenlÃ¤ufige Programme in Java
 
-In der ersten Aufgabe des PVS Praktikums haben wir ein Ampelsystem für eine Straßenkreuzung in Java implementiert. Jede Ampel wird durch eine Himmelsrichtung (Enumeration CardinalDirection) identifiziert, d.h. es gibt insgesamt vier Ampeln (NORTH, SOUTH, EAST und WEST). 
+In der ersten Aufgabe des PVS Praktikums haben wir ein Ampelsystem fÃ¼r eine StraÃŸenkreuzung in Java implementiert. Jede Ampel wird durch eine Himmelsrichtung (Enumeration CardinalDirection) identifiziert, d.h. es gibt insgesamt vier Ampeln (NORTH, SOUTH, EAST und WEST). 
 
-Zudem werden die Farben der Ampel mit der Enumeration Colour festgelegt (RED, YELLOW, GREEN). Jede Ampel beginnt mit dem Zustand RED und wechselt die Farben in der Reihenfolge: RED --> GREEN --> YELLOW --> RED --> GREEN usw. Alle Ampeln sollen als unabhängige und nebenläufige Threads arbeiten.
+Zudem werden die Farben der Ampel mit der Enumeration Colour festgelegt (RED, YELLOW, GREEN). Jede Ampel beginnt mit dem Zustand RED und wechselt die Farben in der Reihenfolge: RED --> GREEN --> YELLOW --> RED --> GREEN usw. Alle Ampeln sollen als unabhÃ¤ngige und nebenlÃ¤ufige Threads arbeiten.
 
-Die Klasse TrafficLight erbt von der Klasse Thread, da wir die Funktionen von Threads benötigen.
+Die Klasse TrafficLight erbt von der Klasse Thread, da wir die Funktionen von Threads benÃ¶tigen.
 
 ```java
 public class TrafficLight extends Thread
@@ -37,7 +37,7 @@ public class TrafficLight extends Thread
 
 ## Klasse Intersection(Main)
 
-In der Klasse Intersection befindet sich die main-Methode. Hier werden die 4 Threads der Klasse TrafficLight erstellt und über die Methode start() aktiviert. Zudem wird die Ampelschaltung nach 50 Millisekunden angehalten.
+In der Klasse Intersection befindet sich die Main-Methode. Hier werden die 4 Threads der Klasse TrafficLight erstellt und Ã¼ber die Methode start() aktiviert. Zudem wird die Ampelschaltung nach 50 Millisekunden angehalten.
 
 ```java
 public class Intersection {
@@ -71,20 +71,20 @@ public class Intersection {
 
 ## Klasse TrafficLight
 
-Die Ampeln besitzen eine CardinalDirection (cd) um den Standort der Ampel zu spezifizieren und eine weitere CardinalDirection (dir) um festzulegen, welche Ampel-Himmelsrichtung zuerst schalten darf. Z.B. wenn 'dir' den Wert 'NORTH' besitzt, dürfen die Ampeln der Himmelsrichtungen 'NORTH' und 'SOUTH' zuerst in die Grünphase schalten. Die Variable (dir) wurde hier als shared Variable festgelegt.
+Die Ampeln besitzen eine CardinalDirection (cd) um den Standort der Ampel zu spezifizieren und eine weitere CardinalDirection (dir) um festzulegen, welche Ampel-Himmelsrichtung zuerst schalten darf. Zum Beispiel, wenn 'dir' den Wert 'NORTH' besitzt, dÃ¼rfen die Ampeln der Himmelsrichtungen 'NORTH' und 'SOUTH' zuerst in die GrÃ¼nphase schalten. Die Variable (dir) wurde hier als Shared Variable festgelegt.
 
 ```java
  private CardinalDirection cd;
  private static volatile CardinalDirection dir;
 ```
 
-Die Variable 'color' beschreibt die Farbe der Ampel und ist für jedes Objekt separat, der Default Wert ist RED.
+Die Variable 'color' beschreibt die Farbe der Ampel und ist fÃ¼r jedes Objekt separat, der Default Wert ist RED.
 
 ```java
  private Colour color; 
 ```
 
-'nextColor' dient zum Erkennen, welche Ampelfarbe für die nächste Ampelphase benötigt wird.
+'nextColor' dient zum Erkennen, welche Ampelfarbe fÃ¼r die nÃ¤chste Ampelphase benÃ¶tigt wird.
 
 ```java
  private static volatile Colour nextColor;
@@ -96,14 +96,14 @@ Um die Ampelschaltung wieder zu stoppen, wurde ein geteilter Boolean 'stopped' e
  private static volatile boolean stopped = false;
 ```
 
-'mainReady' und 'oppReady' sind geteilte Boolean, die speichern, ob die zu schaltenen Richtungen die Farbe der aktuellen Ampelphase angenommen haben.
+'mainReady' und 'oppReady' sind geteilte Boolean, sie speichern, ob die zu schaltenden Richtungen die Farbe der aktuellen Ampelphase angenommen haben.
 
 ```java
  private static volatile boolean mainReady = false;
  private static volatile boolean oppReady = false;
 ```
 
-Das lock Object dient für synchronized als einmalige Referenz, sodass nur ein Thread die damit markierten Bereiche nutzen kann.
+Das Lock Object dient fÃ¼r Synchronized als einmalige Referenz, sodass nur ein Thread die damit markierten Bereiche nutzen kann.
 
 ```java
  private static final Object lock = new Object();
@@ -113,7 +113,7 @@ Das lock Object dient für synchronized als einmalige Referenz, sodass nur ein Th
 
 ### Der Konstruktor
 
-Der Konstruktor besitzt als Übergabeparameter zweimal die Enumeration 'CardinalDirection'. Der Parameter 'cd' ist der Standort der Ampel und 'dir' ist die Ampel-Startrichtung, welche starten darf.
+Der Konstruktor besitzt als Ãœbergabeparameter zweimal die Enumeration 'CardinalDirection'. Der Parameter 'cd' ist der Standort der Ampel und 'dir' ist die Ampel-Startrichtung, welche starten darf.
 
 Zudem wird 'color' auf RED gesetzt, die 'nextColor' Variable wird auf GREEN gesetzt.
 
@@ -168,26 +168,26 @@ Zudem wird 'color' auf RED gesetzt, die 'nextColor' Variable wird auf GREEN gese
 ```
 
 
-Die while-Schleife wird solange ausgeführt, bis die Variable auf 'false' gesetzt wird. Wenn dies passiert, ist die Ampelschaltung gestoppt.
+Die While-Schleife wird solange ausgefÃ¼hrt, bis die Variable auf 'false' gesetzt wird. Wenn dies passiert, ist die Ampelschaltung gestoppt.
 
 ```java
 while (!stopped) 
 ```
 
 
-Diese Abfrage überprüft, welche Ampel-Himmelrichtung geschaltet werden darf. Als Beispiel, wenn 'dir' auf EAST gesetzt ist, dürfen die Ampeln mit der Richtung 'EAST' und die gegenüberliegende Ampel 'WEST' schalten.
+Diese Abfrage Ã¼berprÃ¼ft, welche Ampel-Himmelrichtung geschaltet werden darf. Als Beispiel, wenn 'dir' auf EAST gesetzt ist, dÃ¼rfen die Ampeln mit der Richtung 'EAST' und die gegenÃ¼berliegende Ampel 'WEST' schalten.
 ```java
 if (cd == dir || cd == CardinalDirection.opposite(dir)) 
 ```
 
-Hier wird überprüft, ob die Farbe der Ampel nicht mit der erwarteten Farbe übereinstimmt, also noch nicht weiter geschaltet wurde.
+Hier wird Ã¼berprÃ¼ft, ob die Farbe der Ampel nicht mit der erwarteten Farbe Ã¼bereinstimmt, also noch nicht weiter geschaltet wurde.
 ```java
 if (color != nextColor)
 ```
 
-Der Ausdruck 'synchronized' dient für die Sicherung der Datenkonsistenz, somit kann immer nur ein Thread den kritischen Abschnitt betreten.
-Sobald die Variable 'dir' mit der Variable 'cd' übereinstimmt, wird 'mainReady' auf true gesetzt. Falls 'cd' mit der entgegengesetzten Richtung von 'dir' übereinstimmt, sind wir im Fall der gegenüberliegenden Ampel und somit wird 'oppReady' auf true gesetzt.
-In der nächsten Zeile wird die Farbe der Ampel auf die nächste Farbe gesetzt. Die Reihenfolge sieht wie folgt aus: RED -> GREEN -> YELLOW -> RED...
+Der Ausdruck 'synchronized' dient fÃ¼r die Sicherung der Datenkonsistenz, somit kann immer nur ein Thread den kritischen Abschnitt betreten.
+Sobald die Variable 'dir' mit der Variable 'cd' Ã¼bereinstimmt, wird 'mainReady' auf true gesetzt. Falls 'cd' mit der entgegengesetzten Richtung von 'dir' Ã¼bereinstimmt, sind wir im Fall der gegenÃ¼berliegenden Ampel und somit wird 'oppReady' auf true gesetzt.
+In der nÃ¤chsten Zeile wird die Farbe der Ampel auf die nÃ¤chste Farbe gesetzt. Die Reihenfolge sieht wie folgt aus: RED -> GREEN -> YELLOW -> RED...
 Reporter.show dient zur Ausgabe der Ampel-Himmelrichtung und die aktuelle Farbe der Ampel. Beispielausgabe: "NORTH: GREEN"
 
 ```java
@@ -205,9 +205,9 @@ Reporter.show dient zur Ausgabe der Ampel-Himmelrichtung und die aktuelle Farbe 
 ```
 
 
-In diesem synchronized Abschnitt wird erst überprüft, ob beide Ampeln einer Himmelsrichtung geschaltet wurden. Ist dies der Fall wird 'nextcolor' auf die nächste Farbe geändert.
-Anschließend werden 'mainReady' und 'oppReady' für die nächste Ampelphase auf false gesetzt.
-Bei der zweiten Abfrage wird überprüft, ob 'nextColor' erneut den Wert GREEN angenommen hat. Wenn dies der Fall ist, wird die Himmelsrichtung verändert.
+In diesem synchronized Abschnitt wird erst Ã¼berprÃ¼ft, ob beide Ampeln einer Himmelsrichtung geschaltet wurden. Ist dies der Fall wird 'nextcolor' auf die nÃ¤chste Farbe geÃ¤ndert.
+AnschlieÃŸend werden 'mainReady' und 'oppReady' fÃ¼r die nÃ¤chste Ampelphase auf false gesetzt.
+Bei der zweiten Abfrage wird Ã¼berprÃ¼ft, ob 'nextColor' erneut den Wert GREEN angenommen hat. Wenn dies der Fall ist, wird die Himmelsrichtung verÃ¤ndert.
 
 ```java
   synchronized (lock) { // mutual exclusion (critical area)
@@ -233,7 +233,7 @@ Beim Aufruf dieser Methode wird die Variable 'stopped' auf true gesetzt und somi
   }
 ```
 
-Hier läuft das Programm wie folgt ab, ausführlichere Ausgaben liegen der .zip Datei bei:
+Hier lÃ¤uft das Programm wie folgt ab, ausfÃ¼hrlichere Ausgaben liegen der .zip Datei bei:
 
 > EAST:	RED
 > WEST:	RED
