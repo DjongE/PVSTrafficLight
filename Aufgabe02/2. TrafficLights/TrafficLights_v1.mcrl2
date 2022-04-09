@@ -1,0 +1,73 @@
+%
+% TrafficLights.mcrl2
+%
+% A specification of a set of four traffic lights at an intersection.
+%
+% Copyright (c) 2019-2021 HS Emden-Leer
+% All Rights Reserved.
+%
+% @version 1.40 - 08 Apr 2021 - GJV - parameterize starting axis in TrafficLight(), renamed Crossing into Intersection
+% @version 1.30 - 16 May 2020 - GJV - drops the need for a four-way synchronization, thereby becoming easier to translate into Go
+% @version 1.20 - 24 May 2019 - GJV - further optimatization, but no longer 100% equivalent with initial standard solution
+% @version 1.10 - 15 May 2019 - GJV - remove debug information and superfluous specs 
+% @version 1.00 - 17 Apr 2019 - GJV - initial version 
+%
+
+%
+% Definition of data types
+%
+
+sort
+    CardinalDirection = struct north | east | south | west;   % 4 directions
+    Axis = struct nsAxis | ewAxis;                            % 2 axes
+    
+map
+    axis: CardinalDirection -> Axis;
+
+eqn
+    axis(north) = nsAxis;
+    axis(south) = nsAxis;
+    axis(east) = ewAxis;
+    axis(west) = ewAxis;
+
+sort
+    Colour =  struct red | yellow | green;                    % 3 colours
+
+map
+    next : Colour -> Colour;
+
+eqn
+    next(red) = green;
+    next(green) = yellow;
+    next(yellow) = red;
+    
+% -----------------------------------------------------------------------------------------------------------------------
+
+%
+% Definition of a TrafficLight
+%
+
+act
+    show : CardinalDirection # Colour;  % the given traffic light shows the given colour
+   % ...   
+    
+    
+    
+proc
+    TrafficLight(d : CardinalDirection, startAxis : Axis) = 
+        % starting axis can continue, other axes have to wait to take over control
+		%... <only one line needed!>
+        TrafficLight(d,red);
+        
+    TrafficLight(d : CardinalDirection, c : Colour) = 
+        % show light, if it is red, handover control and get it back, otherwise synchronize, finally continue with next colour          
+		%... <only one line needed!>
+        show(d,c).TrafficLight(d,next(c));
+        
+
+Intersection = TrafficLight(north, nsAxis) || TrafficLight(east, nsAxis) || TrafficLight(south, nsAxis) || TrafficLight(west, nsAxis);
+% -----------------------------------------------------------------------------------------------------------------------
+
+init
+    Intersection
+;
