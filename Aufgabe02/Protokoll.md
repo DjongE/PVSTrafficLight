@@ -61,12 +61,7 @@ proc
     ;
 
 ReturnChange(credit : Int) =
-        (credit>=100) -> return(100).ReturnChange(100) <>
-        (credit>=50) -> return(50).ReturnChange(50) <>
-        (credit>=20) -> return(20).ReturnChange(20) <>
-        (credit>=10) -> return(10).ReturnChange(10) <>
-        (credit>=5) -> return(5).ReturnChange(5) <> 
-        VM(credit)
+		sum c : Coin.(credit >= value(c)) -> return(c).VM(credit - value(c))
     ;
 
 init
@@ -171,12 +166,7 @@ Und am Ende, wenn es weniger als 5 ist, wird es in seinem Gleichgewicht bewahrt 
 
 ```mCRL2
 ReturnChange(credit : Int) =
-        (credit>=100) -> return(100).ReturnChange(100) <>   %wenn Credit gleich oder größer als Euro
-        (credit>=50) -> return(50).ReturnChange(50) <>		%wenn Credit gleich oder größer als 50 Cent
-        (credit>=20) -> return(20).ReturnChange(20) <>		%wenn Credit gleich oder größer als 20 Cent
-        (credit>=10) -> return(10).ReturnChange(10) <>		%wenn Credit gleich oder größer als 10 Cent
-        (credit>=5) -> return(5).ReturnChange(5) <> 		%wenn Credit gleich oder größer als 5 Cent
-        VM(credit)											%oder return credit
+        sum c : Coin.(credit >= value(c)) -> return(c).VM(credit - value(c))										%oder return credit
     ;
 ```
 
