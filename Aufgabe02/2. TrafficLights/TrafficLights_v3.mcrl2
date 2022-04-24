@@ -25,20 +25,24 @@ map
     axis: CardinalDirection -> Axis;
 
 eqn
-    axis(...) = ...;
-    ...
+    axis(north) = nsAxis;
+    axis(south) = nsAxis;
+    axis(east) = ewAxis;
+    axis(west) = ewAxis;
 
 sort
     Colour =  struct red | yellow | green;                    % 3 colours
 
 map
     next : Colour -> Colour;
+	prev : Colour -> Colour;
 
 eqn
     next(red) = green;
     next(green) = yellow;
     next(yellow) = red;
-    
+
+
 % -----------------------------------------------------------------------------------------------------------------------
 
 %
@@ -47,17 +51,20 @@ eqn
 
 act
     show : CardinalDirection # Colour;  % the given traffic light shows the given colour
-    ...
-    
+
 proc
     TrafficLight(d : CardinalDirection, startAxis : Axis) =
         % starting axis can continue, other axes have to wait to take over control
-		... <only one line needed!>
+        colourSeen(d,red).TrafficLight(d,red) % Start Zustand/Farbe anzeigen
+    ;
 
     TrafficLight(d : CardinalDirection, c : Colour) =
-        % show light, if it is red, handover control and get it back, otherwise synchronize, finally continue with next colour          
-		... <only one line needed!>
-        
+        % show light, if it is red, handover control and get it back, otherwise synchronize, finally continue with next colour
+        show(d,next(c)).TrafficLight(d,next(c)) % den aktuellen Zustand der Ampel anzeigen und TrafficLight mit naechster Farbe aufrufen
+    ;
+
+
+
 % -----------------------------------------------------------------------------------------------------------------------
 
 %
@@ -65,23 +72,39 @@ proc
 %
 
 act
-    ...
-    
-proc 
-                    
+    recieve : CardinalDirection # Colour;
+    intersectionUnsafe : Colour # Colour # Colour # Colour;
+    colourSeen : CardinalDirection # Colour;
+
+proc
+    Monitor(cNorth : Colour,cEast : Colour,cSouth : Colour,cWest : Colour) =
+        ((cNorth in {green,yellow} || cSouth in {green,yellow}) % wenn unsicherer Zustand, dann intersectionUnsafe
+        && (cWest in {green,yellow} || cEast in {green,yellow}))->intersectionUnsafe(cNorth,cEast,cSouth,cWest)
+
+        <> % wenn Zustand sicher ist
+        sum c:Colour, d:CardinalDirection. % Jede Zustands M?glichkeit durchgehen
+            (d==north && cEast == red && cWest == red)->recieve(north,c).Monitor(cNorth=c)<> % Zustand an den Monitor ?bergeben
+            (d==east && cNorth == red && cSouth == red)->recieve(east,c).Monitor(cEast=c)<>
+            (d==south && cEast == red && cWest == red)->recieve(south,c).Monitor(cSouth=c)<>
+            (d==west && cNorth == red && cSouth == red)->recieve(west,c).Monitor(cWest=c)
+    ;
+
+
     Intersection =
-        hide({
-            ...
-        },
+        %hide({
+
+        %},
         allow({
-            ...
+            colourSeen,
+            intersectionUnsafe
         },
         comm({
-            ...
+           show | recieve -> colourSeen % show und recieve gleichzeitig ausf?hren
         },
-            TrafficLight(north, nsAxis) || TrafficLight(east, nsAxis) || TrafficLight(south, nsAxis) || TrafficLight(west, nsAxis)
-        )))
+            TrafficLight(north, nsAxis) || TrafficLight(east, nsAxis) || TrafficLight(south, nsAxis) || TrafficLight(west, nsAxis) || Monitor(red,red,red,red)
+        ))%)
     ;
+
 
 % -----------------------------------------------------------------------------------------------------------------------
 init

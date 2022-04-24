@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7fd56473-1310-490a-905e-ef092a0b5c9d" name="Changes" comment="auf02 VendingMachine finish and TL01">
+    <list default="true" id="7fd56473-1310-490a-905e-ef092a0b5c9d" name="Changes" comment="auf02 VendingMachine finish and TL01.1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Aufgabe02/1. VendingMachine/01_VM.mcrl2" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe02/1. VendingMachine/01_VM.mcrl2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Aufgabe02/1. VendingMachine/02_VM bounded.lps" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Aufgabe02/1. VendingMachine/02_VM bounded.lts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/PVSTrafficLight/main/Intersection.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/PVSTrafficLight/main/Intersection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/PVSTrafficLight/main/TrafficLight.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/PVSTrafficLight/main/TrafficLight.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/CardinalDirection$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/CardinalDirection$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/CardinalDirection.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/CardinalDirection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/Colour$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/Colour$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/Colour.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/Colour.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/Reporter.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/Reporter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe02/2. TrafficLights/TrafficLights_v2.mcrl2" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe02/2. TrafficLights/TrafficLights_v2.mcrl2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe02/2. TrafficLights/TrafficLights_v3.mcrl2" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe02/2. TrafficLights/TrafficLights_v3.mcrl2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe02/2. TrafficLights/TrafficLights_v4.mcrl2" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe02/2. TrafficLights/TrafficLights_v4.mcrl2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe02/Protokoll.md" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe02/Protokoll.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +109,7 @@
       <updated>1648523902202</updated>
       <workItem from="1650333344633" duration="117000" />
       <workItem from="1650384274723" duration="3000" />
-      <workItem from="1650810879413" duration="466000" />
+      <workItem from="1650810879413" duration="2897000" />
     </task>
     <task id="LOCAL-00001" summary="fix">
       <created>1648649882773</created>
@@ -166,7 +160,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649516470822</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="auf02 VendingMachine finish and TL01.1">
+      <created>1650811366506</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1650811366506</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,6 +194,7 @@
     <MESSAGE value="add Aufgabe02 and fix last version Aufgabe01" />
     <MESSAGE value="VendingMachine fertig" />
     <MESSAGE value="auf02 VendingMachine finish and TL01" />
-    <option name="LAST_COMMIT_MESSAGE" value="auf02 VendingMachine finish and TL01" />
+    <MESSAGE value="auf02 VendingMachine finish and TL01.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="auf02 VendingMachine finish and TL01.1" />
   </component>
 </project>

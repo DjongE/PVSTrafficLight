@@ -25,8 +25,10 @@ map
     axis: CardinalDirection -> Axis;
 
 eqn
-    axis(...) = ...;
-    ...
+    axis(north) = nsAxis;
+    axis(south) = nsAxis;
+    axis(east) = ewAxis;
+    axis(west) = ewAxis;
 
 sort
     Colour =  struct red | yellow | green;                    % 3 colours
@@ -38,7 +40,8 @@ eqn
     next(red) = green;
     next(green) = yellow;
     next(yellow) = red;
-    
+
+
 % -----------------------------------------------------------------------------------------------------------------------
 
 %
@@ -47,17 +50,24 @@ eqn
 
 act
     show : CardinalDirection # Colour;  % the given traffic light shows the given colour
-    ...
-    
+    wasShown : Axis;
 proc
     TrafficLight(d : CardinalDirection, startAxis : Axis) =
-        % starting axis can continue, other axes have to wait to take over control
-		... <only one line needed!>
+        % auf Startrichtung pruefen
+        (axis(d) == startAxis) -> TrafficLight(d,red) <> waitDirection(d).TrafficLight(d,red)
+    ;
 
     TrafficLight(d : CardinalDirection, c : Colour) =
-        % show light, if it is red, handover control and get it back, otherwise synchronize, finally continue with next colour          
-		... <only one line needed!>
-        
+        % show(d,c): den aktuellen Zustand anzeigen
+        % wasShown(axis(d)): auf die gegenueberliegende Ampel warten
+        % (c==red): wenn Ampel rot
+        % NextDirection(d): Richtungswechsel
+        % waitDirection(d): auf Richtungswechsel warten
+        % NextColour(d,c): Ampel auf die naechste Farbe schalten
+        show(d,c).wasShown(axis(d)).(c == red) -> NextDirection(d).waitDirection(d).TrafficLight(d,next(c)) <> TrafficLight(d,next(c))
+    ;
+
+
 % -----------------------------------------------------------------------------------------------------------------------
 
 %
@@ -65,23 +75,37 @@ proc
 %
 
 act
-    ...
-    
-proc 
-                    
+    nextDirection : CardinalDirection;
+    waitDirection : CardinalDirection;
+    axisWasShown : Axis;
+    changedDirection : CardinalDirection;
+
+proc
+    NextDirection(d : CardinalDirection) = % Die naechste Richtung freigeben
+        (d == north) -> nextDirection(east) +
+        (d == east) -> nextDirection(south) +
+        (d == south) -> nextDirection(west) +
+        (d == west) -> nextDirection(north)
+    ;
+
     Intersection =
         hide({
-            ...
+            axisWasShown,
+            changedDirection
         },
         allow({
-            ...
+            show,
+            axisWasShown,
+            changedDirection | changedDirection
         },
         comm({
-            ...
+            waitDirection | nextDirection -> changedDirection,
+            wasShown | wasShown -> axisWasShown
         },
             TrafficLight(north, nsAxis) || TrafficLight(east, nsAxis) || TrafficLight(south, nsAxis) || TrafficLight(west, nsAxis)
         )))
     ;
+
 
 % -----------------------------------------------------------------------------------------------------------------------
 init
