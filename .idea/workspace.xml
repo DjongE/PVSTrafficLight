@@ -6,13 +6,24 @@
   <component name="ChangeListManager">
     <list default="true" id="7fd56473-1310-490a-905e-ef092a0b5c9d" name="Changes" comment="auf02 VendingMachine finish and TL01">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Aufgabe02/1. VendingMachine/01_VM.lps" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Aufgabe02/1. VendingMachine/01_VM.mcrl2" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe02/1. VendingMachine/01_VM.mcrl2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe02/1. VendingMachine/02_VM bounded.lps" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe02/1. VendingMachine/02_VM bounded.lts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/PVSTrafficLight/main/Intersection.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/PVSTrafficLight/main/Intersection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/PVSTrafficLight/main/TrafficLight.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/PVSTrafficLight/main/TrafficLight.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/CardinalDirection$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/CardinalDirection$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/CardinalDirection.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/CardinalDirection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/Colour$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/Colour$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/Colour.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/Colour.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/Reporter.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/PVSTrafficLight/pds/trafficlight/Reporter.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -26,6 +37,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
   <component name="ProjectId" id="272h50SAhtZI5q3QAhIC5oLHiQk" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -38,6 +52,8 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Aufgabe02/1. VendingMachine" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -58,6 +74,8 @@
   </component>
   <component name="RunManager">
     <configuration name="Intersection" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="main.Intersection" />
       <module name="PVSTrafficLight" />
       <extension name="coverage">
@@ -95,6 +113,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1648523902202</updated>
+      <workItem from="1650333344633" duration="117000" />
+      <workItem from="1650384274723" duration="3000" />
+      <workItem from="1650810879413" duration="466000" />
     </task>
     <task id="LOCAL-00001" summary="fix">
       <created>1648649882773</created>
@@ -147,6 +168,9 @@
     </task>
     <option name="localTasksCounter" value="8" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

@@ -26,6 +26,7 @@ eqn
 	value(_50c) = 50;
 	value(Euro) = 100;
 
+
 % -----------------------------------------------------------------------------------------------------------------------
 %
 % Definition of the products
@@ -36,8 +37,7 @@ sort
 map
     price: Product  -> Int; % the price of a product as an integer
 
-eqn
-    price(tea) = 10;
+eqn price(tea) = 10;
 	price(coffee) = 25;
 	price(cake) = 60;
 	price(apple) = 80;
@@ -47,7 +47,7 @@ eqn
 % Definition of the actions
 %
 act
-    accept: Coin;        % accept a coin inserted into the machine    
+    accept: Coin;        % accept a coin inserted into the machine
     return: Coin;        % returns change
     offer: Product;      % offer the possibility to order a certain product
     serve: Product;      % serve a certain product
@@ -57,23 +57,31 @@ act
 % Definition of the processes
 %
 proc
-    VendingMachine = VM(0);                                        %Credit fingt mit 0
+    VendingMachine = VM(0);
 
     VM(credit : Int) =
-          sum c:Coin.(credit<200)->accept(c).VM(credit+value(c))     %Credit kleier (200)-> akzeptiert neue Coints
-        + sum p:Product.(credit>=price(p)) ->                       %Credit gleich oder größer als Produktpreis
-          offer(p).serve(p).VM(credit-price(p))                      %Produktpreis wird von Credit abgezogen
-        + (credit>0) -> returnChange(credit).ReturnChange(credit)  %Return refund credit
+        (credit < 200) -> sum c : Coin . accept(c).VM(credit + value(c))
+		+  sum p : Product .(credit >= price(p)) -> offer(p).serve(p).VM(credit - price(p))
+		+ (credit > 0) ->
+         		returnChange(credit).ReturnChange(credit)
     ;
 
-    ReturnChange(credit : Int) =
-%        (credit>=100) -> return(100).ReturnChange(100) <>   %Credit gleich oder größer als Euro
-%        (credit>=50) -> return(50).ReturnChange(50) <>		%Credit gleich oder größer als 50 Cent
-%        (credit>=20) -> return(20).ReturnChange(20) <>		%Credit gleich oder größer als 20 Cent
-%        (credit>=10) -> return(10).ReturnChange(10) <>		%Credit gleich oder größer als 10 Cent
-%        (credit>=5) -> return(5).ReturnChange(5) <> 		%Credit gleich oder größer als 5 Cent
-%        VM(credit)
-      sum c : Coin.(credit >= value(c)) -> return(c).VM(credit - value(c))
+	ReturnChange(credit : Int) =
+            (0 <= credit - value(Euro)) ->
+                return(Euro).ReturnChange(credit - value(Euro))
+            <>
+            (0 <= credit - value(_50c)) ->
+                return(_50c).ReturnChange(credit - value(_50c))
+            <>
+            (0 <= credit - value(_20c)) ->
+                return(_20c).ReturnChange(credit - value(_20c))
+            <>
+            (0 <= credit - value(_10c)) ->
+                return(_10c).ReturnChange(credit - value(_10c))
+            <>
+            (0 <= credit - value(_5c)) ->
+                return(_5c).ReturnChange(credit - value(_5c))
+            + (credit == 0) -> VM(0)
     ;
 
 % -----------------------------------------------------------------------------------------------------------------------
