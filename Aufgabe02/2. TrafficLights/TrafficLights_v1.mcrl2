@@ -53,12 +53,12 @@ act
 proc
     TrafficLight(d : CardinalDirection, startAxis : Axis) =
         % starting axis can continue, other axes have to wait to take over control
-		TrafficLight(d,red)
+		TrafficLight(d, red)
     ;
 
     TrafficLight(d : CardinalDirection, c : Colour) =
         % show light, if it is red, handover control and get it back, otherwise synchronize, finally continue with next colour
-		show(d,c) . TrafficLight(d,next(c)) % den aktuellen Zustand der Ampel anzeigen und zur naechsten Farbe wechseln
+		show(d, c) . TrafficLight(d, next(c)) % den aktuellen Zustand der Ampel anzeigen und zur naechsten Farbe wechseln
     ;
 
 % -----------------------------------------------------------------------------------------------------------------------
