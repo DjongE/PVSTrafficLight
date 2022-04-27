@@ -22,7 +22,7 @@ sort
     Axis = struct nsAxis | ewAxis;                            % 2 axes
     
 map
-    axis: CardinalDirection -> Axis;
+    axis : CardinalDirection -> Axis;
 
 eqn
     axis(north) = nsAxis;

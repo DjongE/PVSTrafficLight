@@ -22,7 +22,7 @@ sort
     Axis = struct nsAxis | ewAxis;                            % 2 axes
     
 map
-    axis: CardinalDirection -> Axis;
+    axis : CardinalDirection -> Axis;
 
 eqn
     axis(north) = nsAxis;
@@ -34,21 +34,22 @@ sort
     Colour =  struct red | yellow | green;                    % 3 colours
 
 map
-    next: Colour -> Colour;
-    safe: Colour # Colour # Colour # Colour -> Bool;
+    next : Colour -> Colour;
+    safe : Colour # Colour # Colour # Colour -> Bool;
 
 var
-    colourNorth: Colour;
-    colourSouth: Colour;
-    colourEast: Colour;
-    colourWest: Colour;
+    colourNorth : Colour;
+    colourSouth : Colour;
+    colourEast : Colour;
+    colourWest : Colour;
 
 eqn
     next(red) = green;
     next(green) = yellow;
     next(yellow) = red;
+
     safe(colourNorth, colourEast, colourSouth, colourWest) =  % wenn unsicherer Zustand, dann intersectionUnsafe
-			  ((!(colourNorth in {red}) || !(colourSouth in {red})) && (!(colourWest in {red}) || !(colourEast in {red})));
+        ((!(colourNorth in {red}) || !(colourSouth in {red})) && (!(colourWest in {red}) || !(colourEast in {red})));
 
 
 % -----------------------------------------------------------------------------------------------------------------------
@@ -58,17 +59,18 @@ eqn
 %
 
 act
-    show: CardinalDirection # Colour;  % the given traffic light shows the given colour
+    show : CardinalDirection # Colour;  % the given traffic light shows the given colour
+    %showTrafiic : CardinalDirection # Colour;
 
 proc
     TrafficLight(d : CardinalDirection, startAxis : Axis) =
         % starting axis can continue, other axes have to wait to take over control
-        show(d,red).TrafficLight(d,red) % Start Zustand/Farbe anzeigen
+        show(d, red) . TrafficLight(d, red) % Start Zustand/Farbe anzeigen
     ;
 
     TrafficLight(d : CardinalDirection, c : Colour) =
         % show light, if it is red, handover control and get it back, otherwise synchronize, finally continue with next colour
-        show(d,next(c)).TrafficLight(d,next(c)) % den aktuellen Zustand der Ampel anzeigen und TrafficLight mit naechster Farbe aufrufen
+        show(d, next(c)) . TrafficLight(d, next(c)) % den aktuellen Zustand der Ampel anzeigen und TrafficLight mit naechster Farbe aufrufen
     ;
 
 
@@ -80,20 +82,20 @@ proc
 %
 
 act
-    recieve: CardinalDirection # Colour;
-    intersectionUnsafe: Colour # Colour # Colour # Colour;
-    colourSeen: CardinalDirection # Colour;
+    recieve : CardinalDirection # Colour;
+    intersectionUnsafe : Colour # Colour # Colour # Colour;
+    colourSeen : CardinalDirection # Colour;
 
 proc
-    Monitor(cNorth : Colour,cEast : Colour,cSouth : Colour,cWest : Colour) =
-            (safe(cNorth, cEast, cSouth, cWest)) -> intersectionUnsafe(cNorth,cEast,cSouth,cWest) <>
+    Monitor(cNorth : Colour, cEast : Colour, cSouth : Colour, cWest : Colour) =
+            (safe(cNorth, cEast, cSouth, cWest)) -> intersectionUnsafe(cNorth, cEast, cSouth, cWest) <>
 
             % wenn der Zustand sicher ist
-            sum c:Colour, d:CardinalDirection. recieve(d,next(c)).% Jede Zustands M?glichkeit durchgehen
-                (d==north)->Monitor(next(c),cEast,cSouth,cWest)<>% Zustand an den Monitor ?bergeben
-                (d==east)->Monitor(cNorth,next(c),cSouth,cWest)<>
-                (d==south)->Monitor(cNorth,cEast,next(c),cWest)<>
-                (d==west)->Monitor(cNorth,cEast,cSouth,next(c))
+            sum c : Colour, d : CardinalDirection. recieve(d, next(c)) . % Jede Zustands M?glichkeit durchgehen
+                (d == north) -> Monitor(next(c), cEast, cSouth, cWest) <> % Zustand an den Monitor ?bergeben
+                (d == east) -> Monitor(cNorth, next(c), cSouth, cWest) <>
+                (d == south) -> Monitor(cNorth, cEast, next(c), cWest) <>
+                (d == west) -> Monitor(cNorth, cEast, cSouth, next(c))
     ;
 
 
@@ -108,7 +110,7 @@ proc
         comm({
             show | recieve -> colourSeen % show und recieve gleichzeitig ausf?hren
         },
-            TrafficLight(north, nsAxis) || TrafficLight(east, nsAxis) || TrafficLight(south, nsAxis) || TrafficLight(west, nsAxis) || Monitor(red,red,red,red)
+            TrafficLight(north, nsAxis) || TrafficLight(east, nsAxis) || TrafficLight(south, nsAxis) || TrafficLight(west, nsAxis) || Monitor(red, red, red, red)
         ))%)
     ;
 

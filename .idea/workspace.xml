@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7fd56473-1310-490a-905e-ef092a0b5c9d" name="Changes" comment="auf02 v2">
+    <list default="true" id="7fd56473-1310-490a-905e-ef092a0b5c9d" name="Changes" comment="auf02 v2.1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Aufgabe02/1. VendingMachine/01_VM.mcrl2" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe02/1. VendingMachine/01_VM.mcrl2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Aufgabe02/2. TrafficLights/TrafficLights_v1.mcrl2" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe02/2. TrafficLights/TrafficLights_v1.mcrl2" afterDir="false" />
@@ -100,7 +100,7 @@
       <workItem from="1650333344633" duration="117000" />
       <workItem from="1650384274723" duration="3000" />
       <workItem from="1650810879413" duration="2948000" />
-      <workItem from="1651073179967" duration="1006000" />
+      <workItem from="1651073179967" duration="1568000" />
     </task>
     <task id="LOCAL-00001" summary="fix">
       <created>1648649882773</created>
@@ -172,7 +172,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651073679815</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="auf02 v2.1">
+      <created>1651074216339</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1651074216339</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,6 +209,7 @@
     <MESSAGE value="auf02 VendingMachine finish and TL01.1" />
     <MESSAGE value="auf02 v1.9" />
     <MESSAGE value="auf02 v2" />
-    <option name="LAST_COMMIT_MESSAGE" value="auf02 v2" />
+    <MESSAGE value="auf02 v2.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="auf02 v2.1" />
   </component>
 </project>

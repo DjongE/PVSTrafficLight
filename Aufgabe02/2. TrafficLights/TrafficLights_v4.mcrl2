@@ -22,13 +22,19 @@ sort
     Axis = struct nsAxis | ewAxis;                            % 2 axes
     
 map
-    axis: CardinalDirection -> Axis;
+    axis : CardinalDirection -> Axis;
+    next : CardinalDirection -> CardinalDirection;
 
 eqn
     axis(north) = nsAxis;
     axis(south) = nsAxis;
     axis(east) = ewAxis;
     axis(west) = ewAxis;
+
+    next(north) = east;
+    next(east) = south;
+    next(south) = west;
+    next(west) = north;
 
 sort
     Colour =  struct red | yellow | green;                    % 3 colours
@@ -40,17 +46,6 @@ eqn
     next(red) = green;
     next(green) = yellow;
     next(yellow) = red;
-
-map
-    next : CardinalDirection -> CardinalDirection;
-
-eqn
-    next(north) = east;
-    next(east) = south;
-    next(south) = west;
-    next(west) = north;
-
-
 
 % -----------------------------------------------------------------------------------------------------------------------
 

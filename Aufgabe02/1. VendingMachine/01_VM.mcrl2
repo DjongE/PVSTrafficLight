@@ -37,10 +37,11 @@ sort
 map
     price: Product  -> Int; % the price of a product as an integer
 
-eqn price(tea) = 10;
-	price(coffee) = 25;
-	price(cake) = 60;
-	price(apple) = 80;
+eqn
+    price(tea) = 10;
+    price(coffee) = 25;
+    price(cake) = 60;
+    price(apple) = 80;
 
 % -----------------------------------------------------------------------------------------------------------------------
 %
@@ -67,19 +68,19 @@ proc
     ;
 
 	ReturnChange(credit : Int) =
-            (value(Euro) <= credit) ->
+            (credit >= value(Euro)) ->
                 return(Euro) . ReturnChange(credit - value(Euro))
             <>
-            (value(_50c) <= credit) ->
+            (credit >= value(_50c)) ->
                 return(_50c) . ReturnChange(credit - value(_50c))
             <>
-            (value(_20c) <= credit) ->
+            (credit >= value(_20c)) ->
                 return(_20c) . ReturnChange(credit - value(_20c))
             <>
-            (value(_10c) <= credit) ->
+            (credit >= value(_10c)) ->
                 return(_10c) . ReturnChange(credit - value(_10c))
             <>
-            (value(_5c) <= credit) ->
+            (credit >= value(_5c)) ->
                 return(_5c) . ReturnChange(credit - value(_5c))
             + (credit == 0) -> VM(0)
     ;

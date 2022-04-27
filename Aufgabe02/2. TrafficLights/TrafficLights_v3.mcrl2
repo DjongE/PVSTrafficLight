@@ -22,7 +22,7 @@ sort
     Axis = struct nsAxis | ewAxis;                            % 2 axes
     
 map
-    axis: CardinalDirection -> Axis;
+    axis : CardinalDirection -> Axis;
 
 eqn
     axis(north) = nsAxis;
@@ -34,19 +34,20 @@ sort
     Colour =  struct red | yellow | green;                    % 3 colours
 
 map
-    next: Colour -> Colour;
-    safe: Colour # Colour # Colour # Colour -> Bool;
+    next : Colour -> Colour;
+    safe : Colour # Colour # Colour # Colour -> Bool;
 
 var
-    colourNorth: Colour;
-    colourEast: Colour;
-    colourSouth: Colour;
-    colourWest: Colour;
+    colourNorth : Colour;
+    colourEast : Colour;
+    colourSouth : Colour;
+    colourWest : Colour;
 
 eqn
     next(red) = green;
     next(green) = yellow;
     next(yellow) = red;
+
     safe(colourNorth, colourEast, colourSouth, colourWest) =
         ((colourNorth in {green, yellow} || colourSouth in {green, yellow}) % wenn unsicherer Zustand, dann intersectionUnsafe
         && (colourWest in {green, yellow} || colourEast in {green, yellow}));
@@ -59,7 +60,7 @@ eqn
 %
 
 act
-    show: CardinalDirection # Colour;  % the given traffic light shows the given colour
+    show : CardinalDirection # Colour;  % the given traffic light shows the given colour
 
 proc
     TrafficLight(d : CardinalDirection, startAxis : Axis) =
