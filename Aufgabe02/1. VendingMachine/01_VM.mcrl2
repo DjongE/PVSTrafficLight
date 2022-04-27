@@ -67,19 +67,19 @@ proc
     ;
 
 	ReturnChange(credit : Int) =
-            (0 <= credit - value(Euro)) ->
+            (credit >= value(Euro)) ->
                 return(Euro).ReturnChange(credit - value(Euro))
             <>
-            (0 <= credit - value(_50c)) ->
+            (credit >= value(_50c)) ->
                 return(_50c).ReturnChange(credit - value(_50c))
             <>
-            (0 <= credit - value(_20c)) ->
+            (credit >= value(_20c)) ->
                 return(_20c).ReturnChange(credit - value(_20c))
             <>
-            (0 <= credit - value(_10c)) ->
+            (credit >= value(_10c)) ->
                 return(_10c).ReturnChange(credit - value(_10c))
             <>
-            (0 <= credit - value(_5c)) ->
+            (credit >= value(_5c)) ->
                 return(_5c).ReturnChange(credit - value(_5c))
             + (credit == 0) -> VM(0)
     ;

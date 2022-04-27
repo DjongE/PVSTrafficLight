@@ -84,8 +84,8 @@ proc
             || cSouth in {green,yellow} && cEast in {green,yellow})->intersectionUnsafe(cNorth,cEast,cSouth,cWest)<>
 
             % wenn der Zustand sicher ist
-            sum c:Colour, d:CardinalDirection. recieve(d,next(c)). % Jede Zustands M?glichkeit durchgehen
-                (d==north)->Monitor(next(c),cEast,cSouth,cWest)<> % Zustand an den Monitor ?bergeben
+            sum c:Colour, d:CardinalDirection. recieve(d,next(c)). % Jede Zustands Moglichkeit durchgehen
+                (d==north)->Monitor(next(c),cEast,cSouth,cWest)<> % Zustand an den Monitor ubergeben
                 (d==east)->Monitor(cNorth,next(c),cSouth,cWest)<>
                 (d==south)->Monitor(cNorth,cEast,next(c),cWest)<>
                 (d==west)->Monitor(cNorth,cEast,cSouth,next(c))

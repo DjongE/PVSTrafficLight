@@ -34,13 +34,13 @@ sort
     Colour =  struct red | yellow | green;                    % 3 colours
 
 map
-    next : Colour -> Colour;
+    next: Colour -> Colour;
 
 eqn
     next(red) = green;
     next(green) = yellow;
     next(yellow) = red;
-    
+
 % -----------------------------------------------------------------------------------------------------------------------
 
 %
@@ -48,26 +48,24 @@ eqn
 %
 
 act
-    show : CardinalDirection # Colour;  % the given traffic light shows the given colour
-   % ...   
-    
-    
-    
-proc
-    TrafficLight(d : CardinalDirection, startAxis : Axis) = 
-        % starting axis can continue, other axes have to wait to take over control
-		%... <only one line needed!>
-        TrafficLight(d,red);
-        
-    TrafficLight(d : CardinalDirection, c : Colour) = 
-        % show light, if it is red, handover control and get it back, otherwise synchronize, finally continue with next colour          
-		%... <only one line needed!>
-        show(d,c).TrafficLight(d,next(c));
-        
+    show: CardinalDirection # Colour;  % the given traffic light shows the given colour
 
-Intersection = TrafficLight(north, nsAxis) || TrafficLight(east, nsAxis) || TrafficLight(south, nsAxis) || TrafficLight(west, nsAxis);
+proc
+    TrafficLight(d : CardinalDirection, startAxis : Axis) =
+        % starting axis can continue, other axes have to wait to take over control
+		TrafficLight(d,red)
+    ;
+
+    TrafficLight(d : CardinalDirection, c : Colour) =
+        % show light, if it is red, handover control and get it back, otherwise synchronize, finally continue with next colour
+		show(d,c).TrafficLight(d,next(c)) % den aktuellen Zustand der Ampel anzeigen und zur naechsten Farbe wechseln
+    ;
+
 % -----------------------------------------------------------------------------------------------------------------------
 
+%
+% Definition of a intersection with four traffic lights
+%
 init
-    Intersection
+    TrafficLight(north, nsAxis) || TrafficLight(east, nsAxis) || TrafficLight(south, nsAxis) || TrafficLight(west, nsAxis)
 ;
