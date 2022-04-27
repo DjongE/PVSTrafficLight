@@ -34,7 +34,7 @@ sort
     Colour =  struct red | yellow | green;                    % 3 colours
 
 map
-    next: Colour -> Colour;
+    next : Colour -> Colour;
 
 eqn
     next(red) = green;
@@ -48,7 +48,7 @@ eqn
 %
 
 act
-    show: CardinalDirection # Colour;  % the given traffic light shows the given colour
+    show : CardinalDirection # Colour;  % the given traffic light shows the given colour
 
 proc
     TrafficLight(d : CardinalDirection, startAxis : Axis) =
@@ -58,7 +58,7 @@ proc
 
     TrafficLight(d : CardinalDirection, c : Colour) =
         % show light, if it is red, handover control and get it back, otherwise synchronize, finally continue with next colour
-		show(d,c).TrafficLight(d,next(c)) % den aktuellen Zustand der Ampel anzeigen und zur naechsten Farbe wechseln
+		show(d,c) . TrafficLight(d,next(c)) % den aktuellen Zustand der Ampel anzeigen und zur naechsten Farbe wechseln
     ;
 
 % -----------------------------------------------------------------------------------------------------------------------

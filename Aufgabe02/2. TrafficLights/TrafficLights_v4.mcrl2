@@ -41,6 +41,16 @@ eqn
     next(green) = yellow;
     next(yellow) = red;
 
+map
+    next : CardinalDirection -> CardinalDirection;
+
+eqn
+    next(north) = east;
+    next(east) = south;
+    next(south) = west;
+    next(west) = north;
+
+
 
 % -----------------------------------------------------------------------------------------------------------------------
 
@@ -54,7 +64,7 @@ act
 proc
     TrafficLight(d : CardinalDirection, startAxis : Axis) =
         % auf Startrichtung pruefen
-        (axis(d) == startAxis) -> TrafficLight(d,red) <> waitDirection(d).TrafficLight(d,red)
+        (axis(d) == startAxis) -> TrafficLight(d, red) <> waitDirection(d) . TrafficLight(d, red)
     ;
 
     TrafficLight(d : CardinalDirection, c : Colour) =
@@ -64,7 +74,7 @@ proc
         % NextDirection(d): Richtungswechsel
         % waitDirection(d): auf Richtungswechsel warten
         % NextColour(d,c): Ampel auf die naechste Farbe schalten
-        show(d,c).wasShown(axis(d)).(c == red) -> NextDirection(d).waitDirection(d).TrafficLight(d,next(c)) <> TrafficLight(d,next(c))
+        show(d, c) . wasShown(axis(d)) . (c == red) -> nextDirection(next(d)) . waitDirection(d) . TrafficLight(d, next(c)) <> TrafficLight(d, next(c))
     ;
 
 
@@ -81,13 +91,6 @@ act
     changedDirection : CardinalDirection;
 
 proc
-    NextDirection(d : CardinalDirection) = % Die naechste Richtung freigeben
-        (d == north) -> nextDirection(east) +
-        (d == east) -> nextDirection(south) +
-        (d == south) -> nextDirection(west) +
-        (d == west) -> nextDirection(north)
-    ;
-
     Intersection =
         hide({
             axisWasShown,
@@ -96,7 +99,7 @@ proc
         allow({
             show,
             axisWasShown,
-            changedDirection | changedDirection
+            changedDirection
         },
         comm({
             waitDirection | nextDirection -> changedDirection,

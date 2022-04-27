@@ -34,13 +34,22 @@ sort
     Colour =  struct red | yellow | green;                    % 3 colours
 
 map
-    next : Colour -> Colour;
+    next: Colour -> Colour;
+    safe: Colour # Colour # Colour # Colour -> Bool;
+
+var
+    colourNorth: Colour;
+    colourSouth: Colour;
+    colourEast: Colour;
+    colourWest: Colour;
 
 eqn
     next(red) = green;
     next(green) = yellow;
     next(yellow) = red;
-    
+    safe(colourNorth, colourEast, colourSouth, colourWest) =  % wenn unsicherer Zustand, dann intersectionUnsafe
+			  ((!(colourNorth in {red}) || !(colourSouth in {red})) && (!(colourWest in {red}) || !(colourEast in {red})));
+
 
 % -----------------------------------------------------------------------------------------------------------------------
 
@@ -49,8 +58,7 @@ eqn
 %
 
 act
-    show : CardinalDirection # Colour;  % the given traffic light shows the given colour
-    %showTrafiic : CardinalDirection # Colour;
+    show: CardinalDirection # Colour;  % the given traffic light shows the given colour
 
 proc
     TrafficLight(d : CardinalDirection, startAxis : Axis) =
@@ -72,20 +80,17 @@ proc
 %
 
 act
-    recieve : CardinalDirection # Colour;
-    intersectionUnsafe : Colour # Colour # Colour # Colour;
-    colourSeen : CardinalDirection # Colour;
+    recieve: CardinalDirection # Colour;
+    intersectionUnsafe: Colour # Colour # Colour # Colour;
+    colourSeen: CardinalDirection # Colour;
 
 proc
     Monitor(cNorth : Colour,cEast : Colour,cSouth : Colour,cWest : Colour) =
-            (cNorth in {green,yellow} && cWest in {green,yellow} % wenn unsicherer Zustand, dann intersectionUnsafe
-            || cNorth in {green,yellow} && cEast in {green,yellow}
-            || cSouth in {green,yellow} && cWest in {green,yellow}
-            || cSouth in {green,yellow} && cEast in {green,yellow})->intersectionUnsafe(cNorth,cEast,cSouth,cWest)<>
+            (safe(cNorth, cEast, cSouth, cWest)) -> intersectionUnsafe(cNorth,cEast,cSouth,cWest) <>
 
             % wenn der Zustand sicher ist
-            sum c:Colour, d:CardinalDirection. recieve(d,next(c)). % Jede Zustands Moglichkeit durchgehen
-                (d==north)->Monitor(next(c),cEast,cSouth,cWest)<> % Zustand an den Monitor ubergeben
+            sum c:Colour, d:CardinalDirection. recieve(d,next(c)).% Jede Zustands M?glichkeit durchgehen
+                (d==north)->Monitor(next(c),cEast,cSouth,cWest)<>% Zustand an den Monitor ?bergeben
                 (d==east)->Monitor(cNorth,next(c),cSouth,cWest)<>
                 (d==south)->Monitor(cNorth,cEast,next(c),cWest)<>
                 (d==west)->Monitor(cNorth,cEast,cSouth,next(c))
